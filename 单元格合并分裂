@@ -1,0 +1,77 @@
+Sub 数据整理()
+
+Dim Stemp1 As Range
+Dim Max_Row As Long
+Dim Rtemp1 As Range
+Dim Str1 As String
+Dim str2 As String
+Dim str3 As String
+Dim i As Long
+
+Max_Row = Worksheets("Sheet1").Range("A1").CurrentRegion.Rows.Count
+'Let Max_Row = 1
+'Let Max_Row = ActiveSheet.UsedRange.Rows.Count
+
+Set Rtemp1 = Worksheets("Sheet1").Range(Worksheets("Sheet1").Cells(1, 1), Worksheets("Sheet1").Cells(Max_Row, 1))
+
+Let i = 1
+Let str3 = ""
+For Each Stemp1 In Rtemp1
+    If str3 = "" Then
+        Let str3 = Stemp1.Offset(0, 1).Value
+    End If
+
+    If Stemp1.Value = Stemp1.Offset(1, 0).Value Then
+        Let str3 = str3 + Str(Stemp1.Offset(1, 1).Value)
+    Else
+        Let Worksheets("Sheet2").Cells(i, 1).Value = Stemp1.Value
+        Let Worksheets("Sheet2").Cells(i, 2).Value = str3
+        Let str3 = ""
+        i = i + 1
+    End If
+Next
+
+End Sub
+
+
+
+
+Sub 分裂()
+
+Dim Rtmp1 As Range
+Dim Rtmp2 As Range
+Dim Max_Row As Long
+Dim Cur_clmn As Integer
+Dim i As Long
+Dim j As Long
+
+Let Max_Row = Worksheets("Sheet1").Range("A1").CurrentRegion.Rows.Count
+Set Rtmp1 = Worksheets("Sheet1").Range(Worksheets("Sheet1").Cells(1, 1), Worksheets("Sheet1").Cells(Max_Row, 1))
+Let j = 1
+
+'分裂
+'For Each Rtmp2 In Rtmp1
+'    Let i = 1
+'    Do Until Rtmp2.Offset(0, i).Value = ""
+'        Let Worksheets("Sheet2").Cells(j, 1) = Rtmp2.Value
+'        Let Worksheets("Sheet2").Cells(j, 2) = Rtmp2.Offset(0, i).Value
+'        i = i + 1
+'        j = j + 1
+'    Loop
+'Next
+
+'缩位补完
+For Each Rtmp2 In Rtmp1
+
+    If Len(Rtmp2.Value) = 7 Then
+        For i = 0 To 9
+            Let Worksheets("Sheet2").Cells(j, 1) = Str(Rtmp2.Value) + Str(i)
+            Let Worksheets("Sheet2").Cells(j, 2) = Rtmp2.Offset(0, 1).Value
+            j = j + 1
+        Next
+    End If
+Next
+
+
+
+End Sub
